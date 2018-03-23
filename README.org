@@ -1,0 +1,42 @@
+* MagnumImGui
+
+  You can try MagnumImGui here [[https://lecopivo.github.io/MagnumImguiPort/][here]].
+
+  To use =MagnumImGui= you need to have [[https://github.com/mosra/magnum][Magnum]] on you machine.
+
+** Installation guide
+
+   To download, build and install please run the following
+   commands. Please change =-DCMAKE_INSTALL_PREFIX=/usr/= to your
+   desired installation destination.
+   #+BEGIN_SRC bash
+   git clone --recursive https://github.com/lecopivo/MagnumImguiPort.git
+   cd MagnumImguiPort
+   mkdir build && cd build
+   cmake .. -DCMAKE_INSTALL_PREFIX=/usr/
+   make -j
+   make install
+   #+END_SRC
+
+** Usage
+
+   You can have a look at =src/Example.cpp= to see how is the library
+   used. 
+  
+   Once =MagnumImGui= is installed you can use it by including files:
+   #+BEGIN_SRC C
+   #include <MagnumImGui/MagnumImGui.h>
+   #include <MagnumImGui/imgui.h>
+   #+END_SRC
+   and link =libMagnumImGui=, i.e. in cmake
+   #+BEGIN_SRC cmake
+   target_link_libraries(main MagnumImGui)
+   #+END_SRC
+
+*** TODO Explain usage in more detail   
+
+* Example
+  
+  Run =build/src/Example= to see what =MagnumImGui= can do.
+
+  [[file:img.png]]
