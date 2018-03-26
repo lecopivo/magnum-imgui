@@ -336,10 +336,10 @@ bool MagnumImGui::textInputEvent(
 ImguiShader::ImguiShader() {
 
   const char *vertex_shader =
-      "#ifndef NEW_GLSL\n"
-      "#define in attribute\n"
-      "#define out varying\n"
-      "#endif\n"
+      // "#ifndef NEW_GLSL\n"
+      // "#define in attribute\n"
+      // "#define out varying\n"
+      // "#endif\n"
       "\n"
       "#ifdef EXPLICIT_UNIFORM_LOCATION\n"
       "layout(location = 0)\n"
@@ -372,11 +372,11 @@ ImguiShader::ImguiShader() {
       "}\n";
 
   const char *fragment_shader =
-      "#ifndef NEW_GLSL\n"
-      "#define in varying\n"
-      "#define color gl_FragColor\n"
-      "#define texture texture2D\n"
-      "#endif\n"
+      // "#ifndef NEW_GLSL\n"
+      // "#define in varying\n"
+      // "#define color gl_FragColor\n"
+      // "#define texture texture2D\n"
+      // "#endif\n"
       "\n"
       "#ifndef RUNTIME_CONST\n"
       "#define const\n"
@@ -390,9 +390,9 @@ ImguiShader::ImguiShader() {
       "in mediump vec2 Frag_UV;\n"
       "in mediump vec4 Frag_Color;\n"
       "\n"
-      "#ifdef NEW_GLSL\n"
+      //"#ifdef NEW_GLSL\n"
       "out lowp vec4 color;\n"
-      "#endif\n"
+      //"#endif\n"
       "\n"
       "void main()\n"
       "{\n"

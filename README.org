@@ -6,11 +6,8 @@
 
 ** TODO Installation guide -
 
-
 ** TODO Usage
 
-* Example
-  
-  Run =build/src/Example= to see what =MagnumImGui= can do.
+* Known Bugs:
 
-  [[file:img.png]]
+** Keyboard input does not work :(
