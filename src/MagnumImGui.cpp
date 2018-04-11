@@ -411,10 +411,17 @@ ImguiShader::ImguiShader() {
   Shader vert{version, Shader::Type::Vertex};
   Shader frag{version, Shader::Type::Fragment};
 
-  if (version != Version::GLES200 && version != Version::GL210) {
+  #ifndef MAGNUM_TARGET_GLES
+  if (version != Version::GL210) {
     vert.addSource({"#define NEW_GLSL"});
     frag.addSource({"#define NEW_GLSL"});
   }
+#else
+  if (version != Version::GLES200) {
+    vert.addSource({"#define NEW_GLSL"});
+    frag.addSource({"#define NEW_GLSL"});
+  }
+#endif
 
   vert.addSource({vertex_shader});
   frag.addSource({fragment_shader});
