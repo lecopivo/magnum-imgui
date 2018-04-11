@@ -37,6 +37,7 @@
 using namespace Magnum;
 
 void MagnumImGui::init() {
+  ImGui::CreateContext();
   ImGuiIO &io                    = ImGui::GetIO();
   io.KeyMap[ImGuiKey_Tab]        = ImGuiKey_Tab;
   io.KeyMap[ImGuiKey_LeftArrow]  = ImGuiKey_LeftArrow;
@@ -200,7 +201,7 @@ MagnumImGui::MagnumImGui() {
   load();
 }
 
-MagnumImGui::~MagnumImGui() { ImGui::Shutdown(); }
+MagnumImGui::~MagnumImGui() { ImGui::DestroyContext(); }
 
 void MagnumImGui::newFrame(const Vector2i &winSize,
                            const Vector2i &viewportSize) {
@@ -409,6 +410,11 @@ ImguiShader::ImguiShader() {
 
   Shader vert{version, Shader::Type::Vertex};
   Shader frag{version, Shader::Type::Fragment};
+
+  if (version != Version::GLES200 && version != Version::GL210) {
+    vert.addSource({"#define NEW_GLSL"});
+    frag.addSource({"#define NEW_GLSL"});
+  }
 
   vert.addSource({vertex_shader});
   frag.addSource({fragment_shader});
