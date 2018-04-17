@@ -83,31 +83,45 @@ void Example::viewportEvent(const Vector2i &size) {
 }
 
 void Example::keyPressEvent(KeyEvent &event) {
-  mMagnumImgui.keyPressEvent(event);
+  // exit if interacing with GUI
+  if (mMagnumImgui.keyPressEvent(event))
+    return;
 }
 
 void Example::keyReleaseEvent(KeyEvent &event) {
-  mMagnumImgui.keyReleaseEvent(event);
+  // exit if interacing with GUI
+  if (mMagnumImgui.keyReleaseEvent(event))
+    return;
 }
 
 void Example::mousePressEvent(MouseEvent &event) {
-  mMagnumImgui.mousePressEvent(event);
+  // exit if interacing with GUI
+  if (mMagnumImgui.mousePressEvent(event))
+    return;
 }
 
 void Example::mouseReleaseEvent(MouseEvent &event) {
-  mMagnumImgui.mouseReleaseEvent(event);
+  // exit if interacing with GUI
+  if (mMagnumImgui.mouseReleaseEvent(event))
+    return;
 }
 
 void Example::mouseMoveEvent(MouseMoveEvent &event) {
-  mMagnumImgui.mouseMoveEvent(event);
+  // exit if interacing with GUI
+  if (mMagnumImgui.mouseMoveEvent(event))
+    return;
 }
 
 void Example::mouseScrollEvent(MouseScrollEvent &event) {
-  mMagnumImgui.mouseScrollEvent(event);
+  // exit if interacing with GUI
+  if (mMagnumImgui.mouseScrollEvent(event))
+    return;
 }
 
 void Example::textInputEvent(TextInputEvent &event) {
-  mMagnumImgui.textInputEvent(event);
+  // exit if interacing with GUI
+  if (mMagnumImgui.textInputEvent(event))
+    return;
 }
 
 MAGNUM_APPLICATION_MAIN(Example)

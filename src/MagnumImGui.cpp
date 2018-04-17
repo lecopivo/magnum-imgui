@@ -309,7 +309,7 @@ bool MagnumImGui::mouseReleaseEvent(
 bool MagnumImGui::mouseScrollEvent(
     const Platform::Application::MouseScrollEvent &event) {
   mMouseScroll += event.offset().y();
-  return false;
+  return ImGui::GetIO().WantCaptureMouse;
 }
 
 bool MagnumImGui::mouseMoveEvent(
