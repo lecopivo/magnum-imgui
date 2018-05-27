@@ -11,6 +11,13 @@ target_link_libraries(MagnumImGui
   Magnum::GL
 )
 
+set_target_properties(MagnumImGui PROPERTIES
+    CXX_STANDARD 11
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+)
+
+
 install(TARGETS MagnumImGui DESTINATION "lib/")
 install(FILES MagnumImGui.h DESTINATION "include/")
 
@@ -26,4 +33,10 @@ target_link_libraries(Example
   MagnumImGui
   ${IMGUI_LIB})
   SDL2::SDL2
+
+set_target_properties(Example PROPERTIES
+    CXX_STANDARD 11
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+)
 endif()
