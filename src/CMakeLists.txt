@@ -1,3 +1,5 @@
+project(MagnumImGui CXX)
+
 # Build library
 find_package(Magnum REQUIRED
   Shaders
@@ -5,23 +7,22 @@ find_package(Magnum REQUIRED
 find_package(SDL2 REQUIRED)
 find_library(IMGUI_LIB ImGui) 
 
-add_library(MagnumImGui MagnumImGui.cpp ${MagnumImGuiShaders_RCS})
+add_library(${PROJECT_NAME} MagnumImGui.cpp ${MagnumImGuiShaders_RCS})
 
-target_link_libraries(MagnumImGui
+target_link_libraries(${PROJECT_NAME}
   Magnum::Application
   Magnum::GL
   ${IMGUI_LIB}
 )
 
-set_target_properties(MagnumImGui PROPERTIES
-    CXX_STANDARD 11
-    CXX_STANDARD_REQUIRED ON
-    CXX_EXTENSIONS OFF
+install(TARGETS ${PROJECT_NAME}
+    EXPORT MAGNUMIMGUIExport
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
 )
-
-
-install(TARGETS MagnumImGui DESTINATION "lib/")
 install(FILES MagnumImGui.h DESTINATION "include/")
+install(EXPORT MAGNUMIMGUIExport FILE ${PROJECT_NAME}Config.cmake NAMESPACE ${PROJECT_NAME}:: DESTINATION share/${PROJECT_NAME})
 
 # Build exmaple
 if(BUILD_EXAMPLE)
@@ -31,13 +32,7 @@ target_link_libraries(Example
   Magnum::Application
   Magnum::Magnum
   Magnum::Shaders
-  MagnumImGui
   ${IMGUI_LIB})
+  ${PROJECT_NAME}
   SDL2::SDL2
-
-set_target_properties(Example PROPERTIES
-    CXX_STANDARD 11
-    CXX_STANDARD_REQUIRED ON
-    CXX_EXTENSIONS OFF
-)
 endif()
