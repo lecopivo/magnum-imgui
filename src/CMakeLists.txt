@@ -6,6 +6,11 @@ find_package(SDL2 REQUIRED)
 
 add_library(MagnumImGui MagnumImGui.cpp ${MagnumImGuiShaders_RCS})
 
+target_link_libraries(MagnumImGui
+  Magnum::Application
+  Magnum::GL
+)
+
 install(TARGETS MagnumImGui DESTINATION "lib/")
 install(FILES MagnumImGui.h DESTINATION "include/")
 
