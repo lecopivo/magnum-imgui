@@ -23,14 +23,14 @@
 
 #include <Corrade/Utility/Resource.h>
 
-#include <Magnum/Context.h>
-#include <Magnum/DefaultFramebuffer.h>
+#include <Magnum/GL/Context.h>
+#include <Magnum/GL/DefaultFramebuffer.h>
 #include <Magnum/ImageView.h>
 #include <Magnum/PixelFormat.h>
-#include <Magnum/Renderer.h>
-#include <Magnum/Shader.h>
-#include <Magnum/TextureFormat.h>
-#include <Magnum/Version.h>
+#include <Magnum/GL/Renderer.h>
+#include <Magnum/GL/Shader.h>
+#include <Magnum/GL/TextureFormat.h>
+#include <Magnum/GL/Version.h>
 
 #include <imgui.h>
 
@@ -72,17 +72,17 @@ void MagnumImGui::load() {
   int            pixel_size;
   io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height, &pixel_size);
 
-  ImageView2D image{PixelFormat::RGBA,
-                    PixelType::UnsignedByte,
+  ImageView2D image{ GL::PixelFormat::RGBA,
+					GL::PixelType::UnsignedByte,
                     {width, height},
                     {pixels, std::size_t(pixel_size * width * height)}};
 
-  mTexture.setMagnificationFilter(Sampler::Filter::Linear)
-      .setMinificationFilter(Sampler::Filter::Linear)
-      .setStorage(0, TextureFormat::RGBA, image.size())
-      .setImage(0, TextureFormat::RGBA, image);
+  mTexture.setMagnificationFilter(GL::SamplerFilter::Linear)
+      .setMinificationFilter(GL::SamplerFilter::Linear)
+      .setStorage(0, GL::TextureFormat::RGBA, image.size())
+      .setImage(0, GL::TextureFormat::RGBA, image);
 
-  mMesh.setPrimitive(MeshPrimitive::Triangles);
+  mMesh.setPrimitive(GL::MeshPrimitive::Triangles);
   mMesh.addVertexBuffer(
       mVertexBuffer, 0, ImguiShader::Position{},
       ImguiShader::TextureCoordinates{},
@@ -243,14 +243,14 @@ void MagnumImGui::drawFrame() {
 
   draw_data->ScaleClipRects(io.DisplayFramebufferScale);
 
-  Renderer::enable(Renderer::Feature::Blending);
-  Renderer::setBlendEquation(Magnum::Renderer::BlendEquation::Add,
-                             Magnum::Renderer::BlendEquation::Add);
-  Renderer::setBlendFunction(Renderer::BlendFunction::SourceAlpha,
-                             Renderer::BlendFunction::OneMinusSourceAlpha);
-  Renderer::disable(Renderer::Feature::FaceCulling);
-  Renderer::disable(Renderer::Feature::DepthTest);
-  Renderer::enable(Renderer::Feature::ScissorTest);
+  GL::Renderer::enable(GL::Renderer::Feature::Blending);
+  GL::Renderer::setBlendEquation(Magnum::GL::Renderer::BlendEquation::Add,
+                             Magnum::GL::Renderer::BlendEquation::Add);
+  GL::Renderer::setBlendFunction(GL::Renderer::BlendFunction::SourceAlpha,
+	  GL::Renderer::BlendFunction::OneMinusSourceAlpha);
+  GL::Renderer::disable(GL::Renderer::Feature::FaceCulling);
+  GL::Renderer::disable(GL::Renderer::Feature::DepthTest);
+  GL::Renderer::enable(GL::Renderer::Feature::ScissorTest);
 
   const Matrix4 ortho_projection{
       {2.0f / io.DisplaySize.x, 0.0f, 0.0f, 0.0f},
@@ -267,23 +267,23 @@ void MagnumImGui::drawFrame() {
 
     mVertexBuffer.setData(
         {cmd_list->VtxBuffer.Data, std::size_t(cmd_list->VtxBuffer.Size)},
-        BufferUsage::StreamDraw);
+		GL::BufferUsage::StreamDraw);
     mIndexBuffer.setData(
         {cmd_list->IdxBuffer.Data, std::size_t(cmd_list->IdxBuffer.Size)},
-        BufferUsage::StreamDraw);
+		GL::BufferUsage::StreamDraw);
 
     for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++) {
       const ImDrawCmd *pcmd = &cmd_list->CmdBuffer[cmd_i];
 
-      Renderer::setScissor(
+      GL::Renderer::setScissor(
           {{(int)pcmd->ClipRect.x, fb_height - (int)(pcmd->ClipRect.w)},
            {(int)(pcmd->ClipRect.z), fb_height - (int)(pcmd->ClipRect.y)}});
 
       mMesh.setCount(pcmd->ElemCount);
       mMesh.setIndexBuffer(mIndexBuffer, idx_buffer_offset * sizeof(ImDrawIdx),
                            sizeof(ImDrawIdx) == 2
-                               ? Mesh::IndexType::UnsignedShort
-                               : Mesh::IndexType::UnsignedInt);
+                               ? GL::MeshIndexType::UnsignedShort
+                               : GL::MeshIndexType::UnsignedInt);
 
       idx_buffer_offset += pcmd->ElemCount;
 
@@ -291,9 +291,9 @@ void MagnumImGui::drawFrame() {
     }
   }
 
-  Renderer::disable(Renderer::Feature::ScissorTest);
-  Renderer::enable(Renderer::Feature::FaceCulling);
-  Renderer::enable(Renderer::Feature::DepthTest);
+  GL::Renderer::disable(GL::Renderer::Feature::ScissorTest);
+  GL::Renderer::enable(GL::Renderer::Feature::FaceCulling);
+  GL::Renderer::enable(GL::Renderer::Feature::DepthTest);
 }
 
 bool MagnumImGui::mousePressEvent(
@@ -401,18 +401,18 @@ ImguiShader::ImguiShader() {
       "}\n";
 
 #ifndef MAGNUM_TARGET_GLES
-  const Version version = Context::current().supportedVersion(
-      {Version::GL330, Version::GL310, Version::GL300, Version::GL210});
+  const GL::Version version = GL::Context::current().supportedVersion(
+      { GL::Version::GL330, GL::Version::GL310, GL::Version::GL300, GL::Version::GL210});
 #else
   const Version version =
       Context::current().supportedVersion({Version::GLES300, Version::GLES200});
 #endif
 
-  Shader vert{version, Shader::Type::Vertex};
-  Shader frag{version, Shader::Type::Fragment};
+  GL::Shader vert{version, GL::Shader::Type::Vertex};
+  GL::Shader frag{version, GL::Shader::Type::Fragment};
 
   #ifndef MAGNUM_TARGET_GLES
-  if (version != Version::GL210) {
+  if (version != GL::Version::GL210) {
     vert.addSource({"#define NEW_GLSL"});
     frag.addSource({"#define NEW_GLSL"});
   }
@@ -426,7 +426,7 @@ ImguiShader::ImguiShader() {
   vert.addSource({vertex_shader});
   frag.addSource({fragment_shader});
 
-  CORRADE_INTERNAL_ASSERT_OUTPUT(Shader::compile({vert, frag}));
+  CORRADE_INTERNAL_ASSERT_OUTPUT(GL::Shader::compile({vert, frag}));
 
   attachShaders({vert, frag});
 

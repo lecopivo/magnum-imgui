@@ -24,20 +24,20 @@
 #define MagnumImgui_h__
 
 #include <Magnum/Platform/Sdl2Application.h>
-#include <Magnum/AbstractShaderProgram.h>
+#include <Magnum/GL/AbstractShaderProgram.h>
 #include <Magnum/Math/Matrix4.h>
-#include <Magnum/Texture.h>
-#include <Magnum/Buffer.h>
-#include <Magnum/Mesh.h>
+#include <Magnum/GL/Texture.h>
+#include <Magnum/GL/Buffer.h>
+#include <Magnum/GL/Mesh.h>
 #include <Magnum/Timeline.h>
-#include <Magnum/Attribute.h>
+#include <Magnum/GL/Attribute.h>
 
-class ImguiShader : public Magnum::AbstractShaderProgram
+class ImguiShader : public Magnum::GL::AbstractShaderProgram
 {
 public:
-  typedef Magnum::Attribute<0, Magnum::Vector2> Position;
-  typedef Magnum::Attribute<1, Magnum::Vector2> TextureCoordinates;
-  typedef Magnum::Attribute<2, Magnum::Vector4> Color;
+  typedef Magnum::GL::Attribute<0, Magnum::Vector2> Position;
+  typedef Magnum::GL::Attribute<1, Magnum::Vector2> TextureCoordinates;
+  typedef Magnum::GL::Attribute<2, Magnum::Vector4> Color;
 
   ImguiShader();
 
@@ -47,7 +47,7 @@ public:
     return *this;
   }
 
-  ImguiShader& setTexture(Magnum::Texture2D& texture)
+  ImguiShader& setTexture(Magnum::GL::Texture2D& texture)
   {
     texture.bind(TextureLayer);
     return *this;
@@ -86,11 +86,11 @@ public:
 
 private:
   ImguiShader mShader;
-  Magnum::Texture2D mTexture;
-  Magnum::Buffer mVertexBuffer{Magnum::Buffer::TargetHint::Array};
-  Magnum::Buffer mIndexBuffer{Magnum::Buffer::TargetHint::ElementArray};
+  Magnum::GL::Texture2D mTexture;
+  Magnum::GL::Buffer mVertexBuffer{ Magnum::GL::Buffer::TargetHint::Array};
+  Magnum::GL::Buffer mIndexBuffer{ Magnum::GL::Buffer::TargetHint::ElementArray};
   Magnum::Timeline mTimeline;
-  Magnum::Mesh mMesh;
+  Magnum::GL::Mesh mMesh;
 
   bool mMousePressed[3] = { false, false, false };
   float mMouseScroll = 0.0f;

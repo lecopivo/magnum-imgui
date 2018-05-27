@@ -24,7 +24,7 @@
 #define Example_h__
 
 #include <Magnum/Platform/Sdl2Application.h>
-#include <Magnum/DefaultFramebuffer.h>
+#include <Magnum/GL/DefaultFramebuffer.h>
 
 // To use installed version of MagnumImGui change the following two lines to:
 // #include <MagnumImGui/MagnumImGui.h>
