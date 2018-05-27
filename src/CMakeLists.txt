@@ -3,12 +3,14 @@ find_package(Magnum REQUIRED
   Shaders
   Sdl2Application)
 find_package(SDL2 REQUIRED)
+find_library(IMGUI_LIB ImGui) 
 
 add_library(MagnumImGui MagnumImGui.cpp ${MagnumImGuiShaders_RCS})
 
 target_link_libraries(MagnumImGui
   Magnum::Application
   Magnum::GL
+  ${IMGUI_LIB}
 )
 
 set_target_properties(MagnumImGui PROPERTIES
@@ -25,7 +27,6 @@ install(FILES MagnumImGui.h DESTINATION "include/")
 if(BUILD_EXAMPLE)
 add_executable(Example Example.cpp)
 
-find_library(IMGUI_LIB ImGui)
 target_link_libraries(Example
   Magnum::Application
   Magnum::Magnum
