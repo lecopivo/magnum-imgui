@@ -12,9 +12,9 @@
 
   For imgui we provide a [[file:imgui/CMakeLists.txt][cmake file]] to build and install imgui, [[file:imgui/imgui-install-guide.txt][instructions]]
 
-** Using `vcpkg`
+** Using =vcpkg=
 
-   You can get all prerequisites with `vcpkg` by simply executing 
+   You can get all prerequisites with =vcpkc= by simply executing 
    #+BEGIN_SRC bash
      vcpkg install magnum imgui
    #+END_SRC
