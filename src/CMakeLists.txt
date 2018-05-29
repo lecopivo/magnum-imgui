@@ -5,7 +5,7 @@ find_package(Magnum REQUIRED
   Shaders
   Sdl2Application)
 find_package(SDL2 REQUIRED)
-find_library(IMGUI_LIB ImGui) 
+find_library(IMGUI_LIB NAMES imgui ImGui libimgui libImGui) 
 
 add_library(${PROJECT_NAME} MagnumImGui.cpp ${MagnumImGuiShaders_RCS})
 
@@ -32,7 +32,7 @@ target_link_libraries(Example
   Magnum::Application
   Magnum::Magnum
   Magnum::Shaders
-  ${IMGUI_LIB})
+  ${IMGUI_LIB}
   ${PROJECT_NAME}
-  SDL2::SDL2
+  SDL2::SDL2)
 endif()
