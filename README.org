@@ -1,13 +1,37 @@
 * MagnumImGui
 
+  [[file:img.png]]
+
   You can try MagnumImGui here [[https://lecopivo.github.io/magnum-imgui/][here]].
 
-  To use =MagnumImGui= you need to have [[https://github.com/mosra/magnum][Magnum]] on you machine.
+* Prerequisites 
+   
+  You need [[https://github.com/mosra/magnum][Magnum]] and [[https://github.com/ocornut/imgui][imgui]] installed on your machine. 
 
-** TODO Installation guide -
+  For Magnum follow [[http://doc.magnum.graphics/magnum/building.html][official documentation]].
 
-** TODO Usage
+  For imgui we provide a [[file:imgui/CMakeLists.txt][cmake file]] to build and install imgui, [[file:imgui/imgui-install-guide.txt][instructions]]
 
-* Known Bugs:
+** Using `vcpkg`
 
-** Keyboard input does not work :(
+   You can get all prerequisites with `vcpkg` by simply executing 
+   #+BEGIN_SRC bash
+     vcpkg install magnum imgui
+   #+END_SRC
+
+* Build 
+
+  Just simply
+  #+BEGIN_SRC bash
+  mkdir build; cd build;
+  cmake ..
+  make 
+  #+END_SRC
+
+* Usage 
+
+  See the [[file:src/Example.cpp][example]].
+  
+* Known Bugs
+
+  1. Keyboard input does not work when compiled for web.
