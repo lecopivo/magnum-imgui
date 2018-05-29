@@ -22,8 +22,8 @@
 #include "Example.h"
 
 #include <Magnum/Math/Color.h>
-#include <Magnum/Renderer.h>
-#include <Magnum/Version.h>
+#include <Magnum/GL/Renderer.h>
+#include <Magnum/GL/Version.h>
 
 Example::Example(const Arguments &arguments)
     : Platform::Application{
@@ -33,11 +33,11 @@ Example::Example(const Arguments &arguments)
                          .setSize({1280, 960})} {}
 
 void Example::drawEvent() {
-  Renderer::setClearColor(
+  GL::Renderer::setClearColor(
       {clear_color.x, clear_color.y, clear_color.z, clear_color.w});
-  defaultFramebuffer.clear(FramebufferClear::Color);
+  GL::defaultFramebuffer.clear(GL::FramebufferClear::Color);
 
-  mMagnumImgui.newFrame(windowSize(), defaultFramebuffer.viewport().size());
+  mMagnumImgui.newFrame(windowSize(), GL::defaultFramebuffer.viewport().size());
 
   // 1. Show a simple window
   // Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets appears in a
@@ -79,7 +79,7 @@ void Example::drawEvent() {
 }
 
 void Example::viewportEvent(const Vector2i &size) {
-  defaultFramebuffer.setViewport({{}, size});
+	GL::defaultFramebuffer.setViewport({{}, size});
 }
 
 void Example::keyPressEvent(KeyEvent &event) {
