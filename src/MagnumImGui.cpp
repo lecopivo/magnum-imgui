@@ -413,13 +413,13 @@ ImguiShader::ImguiShader() {
 
   #ifndef MAGNUM_TARGET_GLES
   if (version != GL::Version::GL210) {
-    vert.addSource({"#define NEW_GLSL"});
-    frag.addSource({"#define NEW_GLSL"});
+    vert.addSource({"#define NEW_GLSL\n"});
+    frag.addSource({"#define NEW_GLSL\n"});
   }
 #else
   if (version != Version::GLES200) {
-    vert.addSource({"#define NEW_GLSL"});
-    frag.addSource({"#define NEW_GLSL"});
+    vert.addSource({"#define NEW_GLSL\n"});
+    frag.addSource({"#define NEW_GLSL\n"});
   }
 #endif
 
